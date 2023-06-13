@@ -95,8 +95,14 @@ Assuming that the API is hosted locally (via the Docker Compose deployment above
 ```bash
 # example request
 curl --request GET \
-  --url 'http://localhost:8080/api/pull?chat=apple%3Abanana&cursor=1&limit=1&reverse=true' \
-  --header 'Content-Type: application/json'
+  --url http://localhost:8080/api/pull \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "chat": "apple:banana",
+		"reverse": true,
+		"limit": 10,
+		"cursor": 1
+}'
 ```
 
 ```bash
@@ -172,27 +178,27 @@ A sample of the load test report is as shown.
 
 
      ✗ status was 200
-      ↳  99% — ✓ 144994 / ✗ 411
+      ↳  99% — ✓ 131313 / ✗ 106
 
-     checks.........................: 99.71% ✓ 144994      ✗ 411
-     data_received..................: 20 MB  184 kB/s
-     data_sent......................: 20 MB  182 kB/s
-     http_req_blocked...............: avg=3.85µs  min=0s     med=3µs     max=2.89ms p(90)=4µs      p(95)=5µs
-     http_req_connecting............: avg=531ns   min=0s     med=0s      max=1.91ms p(90)=0s       p(95)=0s
-   ✓ http_req_duration..............: avg=70.31ms min=2.22ms med=35.14ms max=1.23s  p(90)=154.09ms p(95)=239.69ms
-       { expected_response:true }...: avg=68.08ms min=2.22ms med=34.98ms max=1.23s  p(90)=151.62ms p(95)=232.28ms
-     http_req_failed................: 0.28%  ✓ 411         ✗ 144994
-     http_req_receiving.............: avg=51.17µs min=12µs   med=45µs    max=5.89ms p(90)=79µs     p(95)=100µs
-     http_req_sending...............: avg=16.08µs min=4µs    med=13µs    max=3.48ms p(90)=23µs     p(95)=32µs
+     checks.........................: 99.91% ✓ 131313      ✗ 106
+     data_received..................: 41 MB  374 kB/s
+     data_sent......................: 23 MB  213 kB/s
+     http_req_blocked...............: avg=3.9µs   min=0s     med=3µs     max=2.12ms p(90)=4µs      p(95)=5µs
+     http_req_connecting............: avg=564ns   min=0s     med=0s      max=2.06ms p(90)=0s       p(95)=0s
+   ✓ http_req_duration..............: avg=77.83ms min=2.38ms med=43.75ms max=1.84s  p(90)=173.69ms p(95)=259.71ms
+       { expected_response:true }...: avg=77.07ms min=2.38ms med=43.71ms max=1.84s  p(90)=172.84ms p(95)=257.55ms
+     http_req_failed................: 0.08%  ✓ 106         ✗ 131313
+     http_req_receiving.............: avg=52.75µs min=12µs   med=46µs    max=5.31ms p(90)=80µs     p(95)=102µs
+     http_req_sending...............: avg=19.22µs min=5µs    med=16µs    max=1.92ms p(90)=28µs     p(95)=37µs
      http_req_tls_handshaking.......: avg=0s      min=0s     med=0s      max=0s     p(90)=0s       p(95)=0s
-     http_req_waiting...............: avg=70.24ms min=2.16ms med=35.07ms max=1.23s  p(90)=154.02ms p(95)=239.63ms
-     http_reqs......................: 145405 1321.829053/s
-     iteration_duration.............: avg=70.43ms min=2.33ms med=35.26ms max=1.23s  p(90)=154.22ms p(95)=239.8ms
-     iterations.....................: 145405 1321.829053/s
+     http_req_waiting...............: avg=77.76ms min=2.32ms med=43.69ms max=1.84s  p(90)=173.61ms p(95)=259.66ms
+     http_reqs......................: 131419 1194.641258/s
+     iteration_duration.............: avg=77.97ms min=2.51ms med=43.89ms max=1.84s  p(90)=173.8ms  p(95)=259.86ms
+     iterations.....................: 131419 1194.641258/s
      vus............................: 1      min=1         max=199
      vus_max........................: 200    min=200       max=200
 
 
-running (1m50.0s), 000/200 VUs, 145405 complete and 0 interrupted iterations
+running (1m50.0s), 000/200 VUs, 131419 complete and 0 interrupted iterations
 default ✓ [======================================] 000/200 VUs  1m50s
 ```

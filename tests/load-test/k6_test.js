@@ -17,10 +17,14 @@ export const options = {
 
 // Simulated user behavior
 export default function () {
-  const url = "http://localhost:8080/api/pull?chat=apple:banana";
+  const url = "http://localhost:8080/api/pull";
   const headers = { "Content-Type": "application/json" };
+  const payload = JSON.stringify({
+    chat: "apple:banana",
+    reverse: true,
+  });
 
-  let res = http.get(url, {headers});
+  let res = http.request("GET", url, payload, {headers});
   // Validate response status
   check(res, { "status was 200": (r) => r.status == 200 });
 }

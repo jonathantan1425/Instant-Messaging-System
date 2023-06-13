@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"time"
-	"strconv"
 
 	"github.com/TikTokTechImmersion/assignment_demo_2023/http-server/kitex_gen/rpc"
 	"github.com/TikTokTechImmersion/assignment_demo_2023/http-server/kitex_gen/rpc/imservice"
@@ -66,22 +65,18 @@ func sendMessage(ctx context.Context, c *app.RequestContext) {
 }
 
 func pullMessage(ctx context.Context, c *app.RequestContext) {
-	// Get query parameters
-	chat := c.Query("chat")
-	cursorStr := c.Query("cursor")
-	limitStr := c.Query("limit")
-	reverseStr := c.Query("reverse")
-
-	// Optional parameters, skip error handling
-	cursor, _ := strconv.Atoi(cursorStr)
-	limit, _ := strconv.Atoi(limitStr)
-	reverse, _ := strconv.ParseBool(reverseStr)
+	var req api.PullRequest
+	err := c.Bind(&req)
+	if err != nil {
+		c.String(consts.StatusBadRequest, "Failed to parse request body: %v", err)
+		return
+	}
 
 	resp, err := cli.Pull(ctx, &rpc.PullRequest{
-		Chat:    chat,
-		Cursor:  int64(cursor),
-		Limit:   int32(limit),
-		Reverse: &reverse,
+		Chat:    req.Chat,
+		Cursor:  req.Cursor,
+		Limit:   req.Limit,
+		Reverse: &req.Reverse,
 	})
 	if err != nil {
 		c.String(consts.StatusInternalServerError, err.Error())
