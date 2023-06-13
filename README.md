@@ -82,7 +82,7 @@ curl --request POST \
 
 As part of the `POST` data, we need to provide:
 
-- `chat` - A pair of users that this chat message belongs to, separated by `:` (e.g. `jack:marcus`)
+- `chat` - A pair of users that this chat message belongs to, separated by `:` (e.g. `apple:banana`)
 - `text` - The chat message content
 - `sender` - The user sending the message; this user must be one of the users in `chat`
 
@@ -95,15 +95,10 @@ Assuming that the API is hosted locally (via the Docker Compose deployment above
 ```bash
 # example request
 curl --request GET \
-  --url http://localhost:8080/api/pull \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "chat": "apple:banana",
-    "limit": 10,
-    "cursor": 1,
-    "reverse": true
-}'
+  --url 'http://localhost:8080/api/pull?chat=apple%3Abanana&cursor=1&limit=1&reverse=true' \
+  --header 'Content-Type: application/json'
 ```
+
 ```bash
 # example response
 {
@@ -120,7 +115,7 @@ curl --request GET \
 
 As part of the `GET` request, we can provide the following queries:
 
-- `chat` - A pair of users that this chat message belongs to, separated by `:` (e.g. `jack:marcus`)
+- `chat` - A pair of users that this chat message belongs to, separated by `:` (e.g. `apple:banana`)
 - `limit` - [OPTIONAL] The maximum number of chat messages to return, default of `10` if not provided
 - `cursor` - [OPTIONAL] The cursor value used in pagination
 - `reverse` - [OPTIONAL] Setting this value to `true` orders the chat messages by time descending (newest message first), default of `false` if not provided
@@ -133,16 +128,16 @@ Pagination is only applied if `limit` specified is less than the number of avail
 ```bash
 # example response with pagination
 {
-"messages": [
-    {
-        "chat": "apple:banana",
-        "text": "Happy",
-        "sender": "apple",
-        "send_time": 1686662365
-    }
-],
-"has_more": true,
-"next_cursor": 1
+    "messages": [
+        {
+            "chat": "apple:banana",
+            "text": "Happy",
+            "sender": "apple",
+            "send_time": 1686662365
+        }
+    ],
+    "has_more": true,
+    "next_cursor": 1
 }
 ```
 * `has_more` - Boolean value indicating if there are more chat messages in the pagination

@@ -109,6 +109,9 @@ func getRoomID(chat string) (string, error) {
 }
 
 func validateSendRequest(req *rpc.SendRequest) error {
+	if req.Message == nil {
+		return fmt.Errorf("message is nil")
+	}
 	senders := strings.Split(req.Message.Chat, ":")
 	if len(senders) != 2 {
 		err := fmt.Errorf("invalid chat ID '%s', should be in the format of user1:user2", req.Message.GetChat())
