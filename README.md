@@ -1,6 +1,6 @@
 # Instant Messaging System
 
-![Tests](https://github.com/TikTokTechImmersion/assignment_demo_2023/actions/workflows/test.yml/badge.svg)
+![Tests](https://github.com/jonathantan1425/Instant-Messaging-System/actions/workflows/test.yml/badge.svg)
 
 This is an Instant Messaging System, built as a backend assignment of [2023 TikTok Tech Immersion](https://github.com/TikTokTechImmersion/assignment_demo_2023).
 
